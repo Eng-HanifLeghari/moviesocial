@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% load static %}
+ {% block content %}
+     {% if user.is_authenticated %}
+
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row">
+			<div class="social-link">
+				<p>Follow us: </p>
+				<a href="#"><i class="ion-social-facebook"></i></a>
+				<a href="#"><i class="ion-social-twitter"></i></a>
+				<a href="#"><i class="ion-social-googleplus"></i></a>
+				<a href="#"><i class="ion-social-youtube"></i></a>
+			</div>
+
+	    	<div  class="slick-multiItemSlider">
+                {% for movie in movies %}
+	    		<div class="movie-item">
+
+	    			<div class="mv-img">
+	    				<a href="{% url 'moviesingle' movie.id %}"><img src="{{movie.image}}" alt="" width="285" height="437"></a>
+	    			</div>
+	    			<div class="title-in">
+	    				<div class="cate">
+	    					<span class="blue"><a href="#">{{ movie.type }}</a></span>
+	    				</div>
+	    				<h6><a href="{% url 'moviesingle' movie.id %}">{{ movie.title }}</a></h6>
+	    				<p><i class="ion-android-star"></i><span>{{ movie.rating }}</span> /10</p>
+	    			</div>
+
+	    		</div>
+
+                {% endfor %}
+	    	</div>
+
+	    </div>
+	</div>
+</div>
+<div class="movie-items">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="title-hd">
+					<h2>in theater</h2>
+					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
+				</div>
+				<div class="tabs">
+					<ul class="tab-links">
+						<li class="active"><a href="#tab1">#Popular</a></li>
+						<li><a href="#tab2"> #Coming soon</a></li>
+						<li><a href="#tab3">  #Top rated  </a></li>
+						<li><a href="#tab4"> #Most reviewed</a></li>                        
+					</ul>
+				    <div class="tab-content">
+				        <div id="tab1" class="tab active">
+				            <div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for slick in movie_detail %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="{{slick.image}}" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="{% url 'moviesingle' slick.id %}"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">{{ slick.title }}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>{{ slick.rating }}</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+
+				            	</div>
+				            </div>
+			       	 	</div>
+				    </div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="sidebar">
+					<div class="ads">
+						<img src="{% static 'images/uploads/ads1.png' %}" alt="" width="336" height="296">
+					</div>
+					<div class="celebrities">
+						<h4 class="sb-title">Spotlight Celebrities</h4>
+                        {% for item in actor_detail %}
+						<div class="celeb-item">
+							<a href="#"><img src="{{item.actor_images}}" alt="" width="70" height="70"></a>
+							<div class="celeb-author">
+								<h6><a href="#">{{ item.actor_title}}</a></h6>
+								<span>{{ item.actor_type }}</span>
+							</div>
+						</div>
+                        {% endfor %}
+
+						<a href="#" class="btn">See all celebrities<i class="ion-ios-arrow-right"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="trailers">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-12">
+				<div class="title-hd">
+					<h2>in theater</h2>
+					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
+				</div>
+				<div class="videos">
+
+				 	<div class="slider-for-2 video-ft">
+                     {% for links in youtube_link %}
+				 		<div>
+					    	<iframe class="item-video" src="#" data-src="{{links.link}}"></iframe>
+					    </div>
+                            {% endfor %}
+					</div>
+
+					<div class="slider-nav-2 thumb-ft">
+                        {% for trailer in in_theater %}
+						<div class="item">
+
+							<div class="trailer-img">
+
+								<img src="{{ trailer.theater_images }}"  alt="photo by Barn Images" width="4096" height="2737">
+							</div>
+							<div class="trailer-infor">
+	                        	<h4 class="desc">{{ trailer.theater_desc }}</h4>
+	                        	<p>{{ trailer.theater_duration }}</p>
+
+	                        </div>
+
+						</div>
+                        {% endfor %}
+
+						</div>
+					
+					</div>
+				</div>   
+			</div>
+		</div>
+	</div>
+<!-- latest new v1 section-->
+<div class="latestnew">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="ads">
+					<img src="{% static 'images/uploads/ads2.png' %}" alt="" width="728" height="106">
+				</div>
+				<div class="title-hd">
+					<h2>Latest news</h2>
+				</div>
+				<div class="tabs">
+					<ul class="tab-links-3">
+						<li class="active"><a href="#tab31">#Movies </a></li>
+						<li><a href="#tab32"> #TV Shows </a></li>              
+						<li><a href="#tab33">  # Celebs</a></li>                       
+					</ul>
+				    <div class="tab-content">
+				        <div id="tab31" class="tab active">
+				            <div class="row">
+
+				            	<div class="blog-item-style-1">
+                                    {% for latest in latest_news %}
+				            		<img src="{{ latest.latest_image }}" alt="" width="170" height="250">
+				            		<div class="blog-it-infor">
+				            			<h3><a href="#">{{ latest.latest_descript }}</a></h3>
+				            			<span class="time">{{ latest.hour }}</span>
+				            			<p>Exclusive: <span>Amazon Studios </span>has acquired Victoria Woodhull, with Oscar winning Room star <span>Brie Larson</span> polsed to produce, and play the first female candidate for the presidency of the United States. Amazon bought it in a pitch package deal. <span> Ben Kopit</span>, who wrote the Warner Bros film <span>Libertine</span> that has...</p>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+                            </div>
+
+                    </div>
+				<div class="morenew">
+					<div class="title-hd">
+						<h3>More news on Blockbuster</h3>
+						<a href="#" class="viewall">See all Movies news<i class="ion-ios-arrow-right"></i></a>
+					</div>
+					<div class="more-items">
+                        {% for i in latest %}
+						<div class="left">
+
+							<div class="more-it">
+
+								<h6><a href="#">{{ i.latest_descript }}</a></h6>
+								<span class="time">{{ i.hour }}</span>
+
+							</div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+			<div class="col-md-4">
+				<div class="sidebar">
+					<div class="sb-facebook sb-it">
+						<h4 class="sb-title">Find us on Facebook</h4>
+						<iframe src="#" data-src="{% static 'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ftemplatespoint.net%2F%3Ffref%3Dts&tabs=timeline&width=300&height=315px&small_header=true&adapt_container_width=false&hide_cover=false&show_facepile=true&appId' %}" width="300" height="315" style="border:none;overflow:hidden" ></iframe>
+					</div>
+					<div class="sb-twitter sb-it">
+						<h4 class="sb-title">Tweet to us</h4>
+						<div class="slick-tw">
+							<div class="tweet item" id=""><!-- Put your twiter id here -->
+							</div>
+							<div class="tweet item" id=""><!-- Put your 2nd twiter account id here -->
+							</div>
+						</div>					
+					</div>
+				</div>
+			</div>
+		</div>
+                    </div>
+                </div>
+     {% else %}
+
+<body>
+
+<!--end of preloading-->
+<!--login form popup-->
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <form method="post" action="#">
+        	<div class="row">
+        		 <label for="username">
+                    Username:
+                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+        	</div>
+
+            <div class="row">
+            	<label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+            <div class="row">
+            	<div class="remember">
+					<div>
+						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+					</div>
+            		<a href="#">Forget password ?</a>
+            	</div>
+            </div>
+           <div class="row">
+           	 <button type="submit">Login</button>
+           </div>
+        </form>
+        <div class="row">
+        	<p>Or via social</p>
+            <div class="social-btn-2">
+            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper"  id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>sign up</h3>
+        <form method="post" action="#">
+            <div class="row">
+                 <label for="username-2">
+                    Username:
+                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+            </div>
+
+            <div class="row">
+                <label for="email-2">
+                    your email:
+                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="password-2">
+                    Password:
+                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="repassword-2">
+                    re-type Password:
+                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+           <div class="row">
+             <button type="submit">sign up</button>
+           </div>
+        </form>
+    </div>
+</div>
+<!--end of signup form popup-->
+
+<div class="landing-hero">
+	<img src="images/logo1.png" alt="Logo">
+	<div class="row landing-hero-text">
+		<h2>MOST COMPLETED</h2>
+		<h2 class="text-yellow">FILM REVIEW  &middot;  MOVIE DATABASE</h2>
+		<h2>HTML TEMPLATE</h2>
+	</div>
+	<a href="#" class="redbtn" id="discover-now">DISCOVER NOW</a>
+</div>
+<div class="landing-version">
+	<div class="container">
+		<div class="col-md-6">
+			<img src="images/uploads/landing-dark-version.png" alt="Dark Version">
+			<h2>DARK VERSION</h2>
+			<a href="index-2.html" target="blank_" class="redbtn">SEE DEMO</a>
+		</div>
+		<div class="col-md-6">
+			<img src="images/uploads/landing-light-version.png" alt="Light Version">
+			<h2>LIGHT VERSION</h2>
+			<a href="index_light.html" target="blank_" class="redbtn">SEE DEMO</a>
+		</div>
+	</div>
+</div>
+<!-- footer v3 section-->
+<div class="ft-copyright-landing">
+	<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
+</div>
+<!-- end of footer v3 section-->
+
+<script src="js/jquery.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/plugins2.js"></script>
+<script src="js/custom.js"></script>
+</body>
+     {% endif %}
+
+<!-- landing14:38-->
+</html>
+{% endblock %}
+</div>
+</div>
+</div>
+</div>
